@@ -5,6 +5,8 @@
 ### Roberto Oliveira - RM551460
 ### Nicolas Oliveira - RM98939
 
+Obs.: Para acessar o diretório do projeto com javadoc, acessar a branch 'documented'
+
 http://localhost:8080/swagger-ui.html
 http://localhost:8080/v3/api-docs
 

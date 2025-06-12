@@ -1,0 +1,13 @@
+[ {
+  "level" : "INFO",
+  "message" : "Saving user: Nicolas123",
+  "timestamp" : [ 2025, 6, 12, 18, 9, 23, 663031600 ]
+}, {
+  "level" : "INFO",
+  "message" : "Saving user: Guilherme123",
+  "timestamp" : [ 2025, 6, 12, 18, 9, 55, 648476700 ]
+}, {
+  "level" : "INFO",
+  "message" : "Saving user: Henrique123",
+  "timestamp" : [ 2025, 6, 12, 18, 10, 11, 623513300 ]
+} ]

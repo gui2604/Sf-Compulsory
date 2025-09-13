@@ -149,14 +149,26 @@ Exemplo de rotas configuradas em **Postman Collection**:
   "betMaxValue": 5000,
   "userPixKey": "joaos-pix"
 }
+```
 Atualizar usuário → PUT /api/v1/users/100
+```json
+{
+  "clientName": "João da Silva",
+  "email": {"value": "joaodasilva@email.com"},
+  "betMaxValue": 600,
+  "userPixKey": "09876543211"
+}
+```
 
 Resetar senha → POST /api/v1/auth/reset-password
+```json
 {
   "currentPassword": "senhaAtual",
   "newPassword": "novaSenha123"
 }
-### 💡 Dica: Use o usuário admin já criado na V3 da migration para autenticação inicial (username: admin, password: admin123).
+```
+
+> 🔹 ***💡 Dica:*** Use o usuário admin já criado na V3 da migration para autenticação inicial (username: admin, password: admin123).
 
 ## 🛠 Build & Run
 Local

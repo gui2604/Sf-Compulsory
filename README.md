@@ -80,7 +80,7 @@ SFCompulsory/
 ├── docker_instructions.txt             # Instruções de execução via Docker
 ├── pom.xml                             # Gerenciador de dependências Maven
 └── README.md
-
+```
 ---
 
 ## 💾 Migrations
@@ -161,7 +161,7 @@ Resetar senha → POST /api/v1/auth/reset-password
 ## 🛠 Build & Run
 Local
 # Clonar o repositório
-git clone https://github.com/seu-usuario/SFCompulsory.git
+git clone https://github.com/gui2604/Sf-Compulsory
 cd SFCompulsory
 
 # Rodar a aplicação

@@ -1,6 +1,3 @@
-http://localhost:8080/swagger-ui.html
-http://localhost:8080/v3/api-docs
-
 # SFCompulsory
 
 ## Swagger/OpenAPI:

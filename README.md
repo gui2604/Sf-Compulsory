@@ -172,6 +172,9 @@ Resetar senha → POST /api/v1/auth/reset-password
 
 > 🔹 ***🛢️ Collection:*** Pode baixar a collection do projeto por meio do arquivo: 'Challenge SFCompulsory.postman_collection.json' presente na raiz do projeto.
 
+## 📊 Diagrama Entidade-Relacionamento
+O diagrama entidade-relacionamento pode ser encontrado no arquivo 'diagrama_ER.png' no diretório raíz do projeto.
+
 ## 🛠 Build & Run
 ### Clonar o repositório
 git clone https://github.com/gui2604/Sf-Compulsory

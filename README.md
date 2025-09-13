@@ -169,6 +169,7 @@ Resetar senha → POST /api/v1/auth/reset-password
 ```
 
 > 🔹 ***💡 Dica:*** Use o usuário admin já criado na V3 da migration para autenticação inicial (username: admin, password: admin123).
+
 > 🔹 ***🛢️ Collection:*** Pode baixar a collection do projeto por meio do arquivo: 'Challenge SFCompulsory.postman_collection.json' presente na raiz do projeto.
 
 ## 🛠 Build & Run
@@ -184,5 +185,5 @@ cd SFCompulsory
 
 ## 🐳 Docker
 ### A aplicação está disponibilizada em um container publico:
-docker pull gui2604/sf-compulsory:v1.0.2
-docker run --name container-sf-compulsory -p 8080:8080 gui2604/sf-compulsory:v1.0.2
+docker pull gui2604/sf-compulsory:v1.1.0
+docker run --name container-sf-compulsory -p 8080:8080 gui2604/sf-compulsory:v1.1.0

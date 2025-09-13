@@ -1,9 +1,5 @@
 # SFCompulsory
 
-## Swagger/OpenAPI:
-### http://localhost:8080/swagger-ui.html
-### http://localhost:8080/v3/api-docs
-
 ## 🚀 3ESPV - Engenharia de Software 3º Ano
 ### 🧑‍💻 Guilherme Barreto Santos - RM97674
 ### 🧑‍💻 Henrique Parra - RM551973

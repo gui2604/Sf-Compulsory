@@ -10,4 +10,8 @@
   "level" : "INFO",
   "message" : "Saving user: Henrique123",
   "timestamp" : [ 2025, 6, 12, 18, 10, 11, 623513300 ]
+}, {
+  "level" : "INFO",
+  "message" : "Creating user: joaos",
+  "timestamp" : [ 2025, 9, 13, 16, 44, 44, 727306000 ]
 } ]

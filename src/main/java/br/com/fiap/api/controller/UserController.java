@@ -6,18 +6,13 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import br.com.fiap.api.dto.UserCreateDTO;
+import br.com.fiap.api.dto.UserUpdateDTO;
 import br.com.fiap.api.model.User;
 import br.com.fiap.api.service.UserService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -34,67 +29,47 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<User> searchUserForId(@PathVariable Long id) {
         return userService.searchForId(id)
-        		.map(user -> ResponseEntity.ok(user)) //Outra forma de escrever abreviadamente: '.map(ResponseEntity::ok)'
-        		.orElse(ResponseEntity.notFound().build());
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<?> createUser(@RequestBody User user) {
-    	try {
-            User savedUser = userService.save(user);
+    public ResponseEntity<?> createUser(@RequestBody @Valid UserCreateDTO dto) {
+        try {
+            User savedUser = userService.createUser(dto);
             return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(e.getMessage());
         }
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable Long id) {
-        userService.delete(id);
-    }
-
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User updatedUser) {
-        Optional<User> existingUser = userService.searchForId(id);
-
-        if (existingUser.isPresent()) {
-            User user = existingUser.get();
-            user.setClientName(updatedUser.getClientName());
-            user.setEmail(updatedUser.getEmail());
-            user.setBetMaxValue(updatedUser.getBetMaxValue());
-            user.setUserPixKey(updatedUser.getUserPixKey());
-
-            User savedUser = userService.save(user);
-            return ResponseEntity.ok(savedUser);
-        } else {
-            return ResponseEntity.notFound().build();
+    public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody @Valid UserUpdateDTO dto) {
+        try {
+            User updatedUser = userService.updateUser(id, dto);
+            return ResponseEntity.ok(updatedUser);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
-    
+
     @PatchMapping("/{id}")
-    public ResponseEntity<User> updateUserField(@PathVariable Long id, @RequestBody User parcialUser) {
-        Optional<User> existingUser = userService.searchForId(id);
+    public ResponseEntity<?> updateUserField(@PathVariable Long id, @RequestBody UserUpdateDTO dto) {
+        try {
+            User updatedUser = userService.updateUser(id, dto);
+            return ResponseEntity.ok(updatedUser);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
 
-        if (existingUser.isPresent()) {
-            User user = existingUser.get();
-
-            if (parcialUser.getClientName() != null) {
-                user.setClientName(parcialUser.getClientName());
-            }
-            if (parcialUser.getEmail() != null) {
-                user.setEmail(parcialUser.getEmail());
-            }
-            if (parcialUser.getBetMaxValue() != null) {
-                user.setBetMaxValue(parcialUser.getBetMaxValue());
-            }
-            if (parcialUser.getUserPixKey() != null) {
-            	user.setUserPixKey(parcialUser.getUserPixKey());
-            }
-
-            User savedUser = userService.save(user);
-            return ResponseEntity.ok(savedUser);
-        } else {
-            return ResponseEntity.notFound().build();
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
+        try {
+            userService.delete(id);
+            return ResponseEntity.noContent().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 }

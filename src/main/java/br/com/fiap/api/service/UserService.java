@@ -10,25 +10,29 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.com.fiap.api.dto.ResetPasswordRequest;
+import br.com.fiap.api.dto.UserCreateDTO;
+import br.com.fiap.api.dto.UserUpdateDTO;
 import br.com.fiap.api.log.LogSummaryService;
 import br.com.fiap.api.model.User;
 import br.com.fiap.api.repository.UserRepository;
+import br.com.fiap.api.vo.EmailVO;
+import br.com.fiap.api.vo.PasswordVO;
+import br.com.fiap.api.vo.UsernameVO;
 import jakarta.validation.Valid;
 
 @Service
 public class UserService {
-	 private static final Logger log = LoggerFactory.getLogger(UserService.class);
-    
+    private static final Logger log = LoggerFactory.getLogger(UserService.class);
+
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-    
+
     @Autowired
     private LogSummaryService logSummaryService;
 
- 
     // -------------------------- CRUD ---------------------------------
     public List<User> listAll() {
         return userRepository.findAll();
@@ -38,38 +42,46 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    public User save(User user){
-    	log.info("Saving user: {}", user.getUsername());
-    	logSummaryService.addLog("INFO", "Saving user: " + user.getUsername());
-    	String encryptedPassword = passwordEncoder.encode(user.getPassword());
-    	user.setPassword(encryptedPassword);
+    public User createUser(@Valid UserCreateDTO dto) {
+        User user = new User();
+        user.setClientName(dto.getClientName());
+        user.setEmail(dto.getEmail() != null ? dto.getEmail().getValue() : null);
+        user.setBetMaxValue(dto.getBetMaxValue());
+        user.setUsername(dto.getUsername() != null ? dto.getUsername().getValue() : null);
+        user.setPassword(dto.getPassword() != null ? passwordEncoder.encode(dto.getPassword().getValue()) : null);
+        user.setUserPixKey(dto.getUserPixKey());
+
+        log.info("Creating user: {}", user.getUsername());
+        logSummaryService.addLog("INFO", "Creating user: " + user.getUsername());
+
         return userRepository.save(user);
     }
-    
-    public User update(Long id, @Valid User updatedUser) {
+
+    public User updateUser(Long id, @Valid UserUpdateDTO dto) {
         return userRepository.findById(id).map(user -> {
-            user.setClientName(updatedUser.getClientName());
-            user.setEmail(updatedUser.getEmail());
-            user.setBetMaxValue(updatedUser.getBetMaxValue());
-            user.setUserPixKey(updatedUser.getUserPixKey());
+            if (dto.getClientName() != null) user.setClientName(dto.getClientName());
+            if (dto.getEmail() != null) user.setEmail(dto.getEmail().getValue());
+            if (dto.getBetMaxValue() != null) user.setBetMaxValue(dto.getBetMaxValue());
+            if (dto.getUserPixKey() != null) user.setUserPixKey(dto.getUserPixKey());
+
+            log.info("Updating user: {}", user.getUsername());
+            logSummaryService.addLog("INFO", "Updating user: " + user.getUsername());
+
             return userRepository.save(user);
-        }).orElseThrow(() -> new RuntimeException("User not found."));
+        }).orElseThrow(() -> new RuntimeException("User not found"));
     }
-    
+
     public void delete(Long id) {
         userRepository.deleteById(id);
     }
-   
+
     // ------------------------ SECURITY -----------------------------------------------
-    //autenticação de segurança 
     public boolean autenticateUser(String typedUsername, String typedPassword) {
         User user = userRepository.findByUsername(typedUsername)
-            .orElseThrow(() -> new RuntimeException("User not found."));
-
+                .orElseThrow(() -> new RuntimeException("User not found."));
         return passwordEncoder.matches(typedPassword, user.getPassword());
     }
-    
-    //redefinição de senha
+
     public boolean resetPassword(String username, ResetPasswordRequest request) {
         Optional<User> usuarioOpt = userRepository.findByUsername(username);
 
@@ -87,6 +99,4 @@ public class UserService {
 
         return true;
     }
- 
-
 }

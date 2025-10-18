@@ -126,6 +126,25 @@ A API utiliza **Flyway** para versionamento e criação de tabelas:
 
 ---
 
+## 🧪 Testes Unitários
+
+- UserServiceTest → cobre métodos: createUser, updateUser, delete, autenticateUser, resetPassword.
+- LogSummaryServiceTest → cobre métodos: addLog e getSummary.
+
+- UserControllerTest → verifica endpoints REST de /api/v1/users, incluindo GET, POST, PUT, PATCH e DELETE.
+- AuthControllerTest → verifica endpoints de autenticação e reset de senha (/login, /reset-password).
+- LogControllerTest → verifica endpoint /api/logs/summary.
+
+- Rodar Testes
+```bash
+./mvnw test
+
+```
+
+🔹 Observação: Testes utilizam H2 Database para simulação de repositório e Mockito para mocks de dependências como UserRepository e PasswordEncoder.
+
+---
+
 ## 🧪 Testes com Postman
 
 Exemplo de rotas configuradas em **Postman Collection**:

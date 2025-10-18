@@ -14,4 +14,16 @@
   "level" : "INFO",
   "message" : "Creating user: joaos",
   "timestamp" : [ 2025, 9, 13, 16, 44, 44, 727306000 ]
+}, {
+  "level" : "INFO",
+  "message" : "Log 1",
+  "timestamp" : [ 2025, 10, 18, 14, 41, 10, 290284100 ]
+}, {
+  "level" : "ERROR",
+  "message" : "Log 2",
+  "timestamp" : [ 2025, 10, 18, 14, 41, 10, 304288300 ]
+}, {
+  "level" : "INFO",
+  "message" : "Primeiro log",
+  "timestamp" : [ 2025, 10, 18, 14, 41, 10, 365288300 ]
 } ]
